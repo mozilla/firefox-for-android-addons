@@ -1,0 +1,3 @@
+content    youraddon          content/
+locale     youraddon en-US    locale/en-US/
+locale     youraddon fr       locale/fr/
