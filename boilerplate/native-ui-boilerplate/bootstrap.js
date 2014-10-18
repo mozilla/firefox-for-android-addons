@@ -1,3 +1,5 @@
+"use strict";
+
 const { classes: Cc, interfaces: Ci, utils: Cu } = Components;
 
 Cu.import("resource://gre/modules/Services.jsm");
@@ -63,11 +65,11 @@ function unloadFromWindow(window) {
 var windowListener = {
   onOpenWindow: function(aWindow) {
     // Wait for the window to finish loading
-    let domWindow = aWindow.QueryInterface(Ci.nsIInterfaceRequestor).getInterface(Ci.nsIDOMWindowInternal || Ci.nsIDOMWindow);
-    domWindow.addEventListener("load", function() {
-      domWindow.removeEventListener("load", arguments.callee, false);
+    function loadListener() {
+      domWindow.removeEventListener("load", loadListener, false);
       loadIntoWindow(domWindow);
-    }, false);
+    };
+    domWindow.addEventListener("load", loadListener, false);
   },
   
   onCloseWindow: function(aWindow) {
