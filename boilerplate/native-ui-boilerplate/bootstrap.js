@@ -65,6 +65,8 @@ function unloadFromWindow(window) {
 var windowListener = {
   onOpenWindow: function(aWindow) {
     // Wait for the window to finish loading
+    let domWindow = aWindow.QueryInterface(Ci.nsIInterfaceRequestor)
+            .getInterface(Ci.nsIDOMWindowInternal || Ci.nsIDOMWindow);
     function loadListener() {
       domWindow.removeEventListener("load", loadListener, false);
       loadIntoWindow(domWindow);
